@@ -1,3 +1,5 @@
+![Build&Deploy#Docker](https://github.com/ValentinGuevara/skills-showcase/actions/workflows/docker-publish.yml/badge.svg?branch=main)
+
 # 🕹️ Game & Leaderboard Microservices Demo
 
 Welcome to the **Game & Leaderboard Microservices Demo**! This project showcases a scalable microservices architecture using **Node.js 20.0**. The two services—**Game** and **Leaderboard**—leverage various tools and technologies for asynchronous communication, caching, and persistent storage. This README will guide you through the architecture, setup, and deployment.
