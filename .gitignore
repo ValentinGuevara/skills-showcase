@@ -1,0 +1,7 @@
+.nyc_output
+dist
+coverage
+node_modules
+.env
+.terraform
+.terraform.lock.hcl

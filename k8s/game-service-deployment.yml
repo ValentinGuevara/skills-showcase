@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: game-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: game-service
+  template:
+    metadata:
+      labels:
+        app: game-service
+    spec:
+      containers:
+      - name: game-service
+        image: game-service:latest
+        imagePullPolicy: IfNotPresent
+        ports:
+          - containerPort: 3000
+        env:
+          - name: REDIS_HOST
+            value: redis
+          - name: RABBIT_HOST
+            value: rabbitmq
+          - name: RABBIT_USER
+            value: rabbitmq
+          - name: RABBIT_PASSWORD
+            value: not_in_prod
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: game-service
+spec:
+  selector:
+    app: game-service
+  ports:
+    - protocol: TCP
+      port: 3000
+      targetPort: 3000
+  type: ClusterIP

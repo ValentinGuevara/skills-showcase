@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: leaderboard-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: leaderboard-service
+  template:
+    metadata:
+      labels:
+        app: leaderboard-service
+    spec:
+      containers:
+      - name: leaderboard-service
+        image: leaderboard-service:latest
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 4000
+        env:
+        - name: POSTGRES_HOST
+          value: postgres
+        - name: POSTGRES_DB
+          value: guesser
+        - name: POSTGRES_USER
+          value: guesser
+        - name: POSTGRES_PASSWORD
+          value: not_in_prod
+        - name: RABBIT_HOST
+          value: rabbitmq
+        - name: RABBIT_USER
+          value: rabbitmq
+        - name: RABBIT_PASSWORD
+          value: not_in_prod
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: leaderboard-service
+spec:
+  selector:
+    app: leaderboard-service
+  ports:
+    - protocol: TCP
+      port: 4000
+      targetPort: 4000
+  type: ClusterIP
